@@ -1,13 +1,14 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import ItemPurchase from '@/app/(route)/modal/@modal/shop/ItemPurchase';
-import { requestPayment } from '@/app/api/payment'
+import { requestPayment } from '@/app/api/payment';
 
 const ZemShop = () => {
     const [selectedItem, setSelectedItem] = useState<number | null>(null); // 사용자가 선택한 아이템의 ID 저장
     const [isItemShopOpen, setIsItemShopOpen] = useState(false); // 아이템 샵 모달
+    const [token, setToken] = useState<string | null>(null); // 토큰 상태 추가
     const userZem = 1000; // 사용자가 보유한 ZEM 수량
 
     const items = [
@@ -21,7 +22,12 @@ const ZemShop = () => {
         { id: 8, price: 100000, diamonds: 8, image: "/zemImages/zem8.png", zem: 12000, originalZem: 10000 },
     ];
 
-    const token = localStorage.getItem('access_token');
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            const token = localStorage.getItem('access_token');
+            setToken(token);
+        }
+    }, []);
 
     // 아이템 클릭 핸들러
     const handleItemClick = (id: number) => {
