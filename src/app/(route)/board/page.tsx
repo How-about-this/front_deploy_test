@@ -24,7 +24,7 @@ interface Page<T> {
   last: boolean;
 }
 
-export const BoardInner: React.FC = () => {
+const BoardInner: React.FC = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [posts, setPosts] = useState<Post[]>([]);
