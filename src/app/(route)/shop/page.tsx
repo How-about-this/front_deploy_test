@@ -8,15 +8,13 @@ import { useEffect } from 'react';
 
 
 const ShopPage = () => {
-  const userId = localStorage.getItem('user_id');
-  const accessToken = localStorage.getItem('access_token');
   useEffect(() => {
     const getUserData  = async () => {
-      const data = await getData(`/users/${userId}/profile`, "honjaya")
+      const data = await getData(`/users/${localStorage.getItem('user_id')}/profile`, "honjaya")
       console.log(data);
     }
     try {
-      if(userId && accessToken) {
+      if(localStorage.getItem('user_id') && localStorage.getItem('access_token')) {
         getUserData();
       }
     } catch (err) {

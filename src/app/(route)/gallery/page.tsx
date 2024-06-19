@@ -18,14 +18,17 @@ const GalleryPage = () => {
   const [profileImages, setProfileImages] = useState<ProfileImageDto[]>([]);
   const [selectedImages, setSelectedImages] = useState<Set<number>>(new Set());
   const [isEditing, setIsEditing] = useState<boolean>(false);
+  const [userId, setUserId] = useState<string>("")
   const router = useRouter();
-  const userId = localStorage.getItem('user_id');
+
 
   useEffect(() => {
-    if (userId) {
+    const id = localStorage.getItem('user_id')
+    if (id) {
       fetchProfileImages();
+      setUserId(id);
     }
-  }, [userId]);
+  }, []);
 
   const fetchProfileImages = async () => {
     try {

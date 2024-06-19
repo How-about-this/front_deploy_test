@@ -4,6 +4,7 @@ import Navigationbar from "@/app/_components/common/Navigationbar";
 import React, { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { getData } from "@/app/api/api";
+import { Suspense } from 'react';
 
 interface Post {
   id: number;
