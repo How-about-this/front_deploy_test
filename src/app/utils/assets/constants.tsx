@@ -24,6 +24,4 @@ export const FEATURE_OF_HONJAYA = {
                 대화를 이어나가고 싶은지 결정할 수 있답니다. 24시간이 지나기 전에 상대방과 계속 대화를 이어나가고 싶다면 
                 카카오톡에서 대화를 이어나가보세요! 짧은 시간 안에 여러분의 소중한 시간과 감정을 효율적으로 사용할 수 있게 도와드립니다. 
                 `],
-    feature5: ["https://d2v80xjmx68n4w.cloudfront.net/members/thumbs/UOrmo1605450506.png", "contenatkaskdngklajsflkdjaslkdfjalksdjflkajsdflkja설명"],
-    feature6: ["https://d2v80xjmx68n4w.cloudfront.net/members/thumbs/UOrmo1605450506.png", "contenatkaskdngklajsflkdjaslkdfjalksdjflkajsdflkja설명"],
 }
