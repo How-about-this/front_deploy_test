@@ -19,11 +19,10 @@ const TeamCreateModal = ({ setOpenTeamCreateModal }: Props) => {
   const [signuped, setSignuped] = useState(false)
   useEffect(() => {
 
+    //본 서비스에서 유저 이름, 유저 성별 가져오기 -> 몽고 디비에 저장 용도
     const getUserData = async () => {
       try {
         const userData = await getData(`/users/${localStorage.getItem('user_id')}/profile`, 'honjaya')
-        console.log(userData.data.name)
-        console.log(userData.data.gender)
         setCurrentUser(() => [userData.data.name, userData.data.gender]);
       } catch (error) {
         console.log(error);

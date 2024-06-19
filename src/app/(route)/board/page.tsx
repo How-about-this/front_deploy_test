@@ -91,6 +91,8 @@ const BoardPage: React.FC = () => {
   };
 
   return (
+    <Suspense fallback={<div>Loading...</div>}>
+
     <div className="flex h-screen w-screen flex-col items-center bg-white">
       <Navigationbar />
       <h1 className="text-3xl font-jua text-center mt-6 mb-6">게시판</h1>
@@ -158,6 +160,7 @@ const BoardPage: React.FC = () => {
         </div>
       </div>
     </div>
+    </Suspense>
   );
 };
 
