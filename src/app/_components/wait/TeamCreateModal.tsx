@@ -28,7 +28,6 @@ const TeamCreateModal = ({ setOpenTeamCreateModal }: Props) => {
         console.log(error);
       }
     }
-
     getUserData();
   }, [])
 
