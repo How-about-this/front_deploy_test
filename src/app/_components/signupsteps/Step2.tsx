@@ -1,5 +1,4 @@
-"use client"
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import StepIndicator from '../../_components/stepIndicator';
 import NavigationButtons from './navigationbuttons/NavigationButtons';
 
@@ -7,10 +6,15 @@ interface Step2Props {
     nextStep: () => void;
     prevStep: () => void;
     updateFormData: (data: { birthday: string }) => void;
+    formData: any;
 }
 
-const Step2: React.FC<Step2Props> = ({ nextStep, prevStep, updateFormData }) => {
-    const [birthday, setBirthday] = useState<string>("");
+const Step2: React.FC<Step2Props> = ({ nextStep, prevStep, updateFormData, formData }) => {
+    const [birthday, setBirthday] = useState(formData.birthday || "");
+
+    useEffect(() => {
+        setBirthday(formData.birthday || "");
+    }, [formData.birthday]);
 
     const handleSubmit = (event: React.FormEvent) => {
         event.preventDefault();
@@ -25,7 +29,7 @@ const Step2: React.FC<Step2Props> = ({ nextStep, prevStep, updateFormData }) => 
     return (
         <div className="flex items-center justify-center min-h-screen">
             <div className="w-full max-w-xl p-12 bg-white shadow-md rounded-lg border-4 border-red-300">
-                <StepIndicator currentStep={2} />
+                <StepIndicator currentStep={1} />
                 <form onSubmit={handleSubmit} className="space-y-6">
                     <label htmlFor="birthday" className="block text-4xl text-center mb-40">생일은 언제인가요?</label>
                     <input

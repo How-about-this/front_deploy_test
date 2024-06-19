@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from 'react';
-// import { FaHeart } from 'react-icons/fa';
+import { FaHeart } from 'react-icons/fa';
 
 interface HeartButtonProps {
     isOwnMessage: boolean;
@@ -8,7 +8,7 @@ interface HeartButtonProps {
 }
 
 const HeartButton: React.FC<HeartButtonProps> = ({ isOwnMessage, onLike }) => {
-    const [isHovered, setIsHovered] = useState<boolean>(false);
+    const [isHovered, setIsHovered] = useState(false);
 
     return (
         <button
@@ -17,7 +17,7 @@ const HeartButton: React.FC<HeartButtonProps> = ({ isOwnMessage, onLike }) => {
             onMouseLeave={() => setIsHovered(false)}
             className={`absolute ${isOwnMessage ? 'left-0' : 'right-0 mr-2'} mt-[-20px]`}
         >
-            {/* <FaHeart className={`${isHovered ? 'text-red-500' : 'text-gray-500'}`} /> */}
+            <FaHeart className={`${isHovered ? 'text-red-500' : 'text-gray-500'}`} />
         </button>
     );
 };

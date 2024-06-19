@@ -1,9 +1,25 @@
-import React from 'react'
+import Image from 'next/image';
+import React, { useEffect } from 'react'
 
-const Avatar: React.FC = () => {
+interface Avatar {
+    senderProfile: string;
+}
+
+const Avatar: React.FC<Avatar> = ({senderProfile}) => {
+    
+    useEffect(() => {
+        console.log(senderProfile);
+    },[])
+
     return (
-        <div className="w-10 h-10 rounded-full bg-gray-200">
-
+        <div className="relative w-12 h-12">
+        <Image
+            className='rounded-full'
+            src={senderProfile}
+            layout="fill"
+            objectFit="cover"
+            alt='partner_profile'
+          />
         </div>
     )
 }

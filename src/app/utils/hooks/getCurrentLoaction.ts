@@ -4,10 +4,10 @@ const useCurrentLocation = () => {
   const [location, setLocation] = useState<{lat: number, lon: number}>({ lat: 0, lon: 0 });
   const [error, setError] = useState<string>("");
 
-  const setCurrentLocation = async () => {
+  const setCurrentLocation = () => {
     if ("geolocation" in navigator) {
       // 참고: https://developer.mozilla.org/ko/docs/Web/API/Geolocation/getCurrentPosition
-      await navigator.geolocation.getCurrentPosition(
+      navigator.geolocation.getCurrentPosition(
         (position) => {
           setLocation({
             lat: position.coords.latitude,
@@ -30,4 +30,3 @@ const useCurrentLocation = () => {
 };
 
 export default useCurrentLocation;
-

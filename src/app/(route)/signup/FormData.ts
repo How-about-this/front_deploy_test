@@ -7,6 +7,7 @@ export interface FormData {
     weight?: number;
     mbti?: string;
     religion?: string;
-    drinking_capacity?: string;
-    location_agreement?: boolean;
+    drinkAmount?: string;
+    smoke?: boolean;
+    address?: string;
 }

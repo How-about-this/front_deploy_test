@@ -1,6 +1,4 @@
-"use client";
-
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import StepIndicator from '../../_components/stepIndicator';
 import NavigationButtons from './navigationbuttons/NavigationButtons';
 
@@ -8,10 +6,15 @@ interface Step3Props {
     nextStep: () => void;
     prevStep: () => void;
     updateFormData: (data: { gender: string }) => void;
+    formData: any;
 }
 
-const Step3: React.FC<Step3Props> = ({ nextStep, prevStep, updateFormData }) => {
-    const [gender, setGender] = useState<string | null>(null);
+const Step3: React.FC<Step3Props> = ({ nextStep, prevStep, updateFormData, formData }) => {
+    const [gender, setGender] = useState<string | null>(formData.gender || null);
+
+    useEffect(() => {
+        setGender(formData.gender || null);
+    }, [formData.gender]);
 
     const handleSubmit = (event: React.FormEvent) => {
         event.preventDefault();
@@ -26,7 +29,7 @@ const Step3: React.FC<Step3Props> = ({ nextStep, prevStep, updateFormData }) => 
     return (
         <div className="flex items-center justify-center min-h-screen">
             <div className="w-full max-w-xl p-12 bg-white shadow-md rounded-lg border-4 border-red-300">
-                <StepIndicator currentStep={3} />
+                <StepIndicator currentStep={2} />
                 <form onSubmit={handleSubmit} className="space-y-6">
                     <label className="block text-4xl text-center mb-40">성별은 무엇인가요?</label>
                     <div className="flex justify-center space-x-4">

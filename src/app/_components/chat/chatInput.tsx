@@ -1,16 +1,17 @@
-// src/components/ChatInput.tsx
 import React, { useState } from 'react';
 import EmojiPicker from './emojipicker';
-
+import ScheduleModal from '@/app/(route)/modal/@modal/chat/ScheduleModal';
+import { useRouter } from 'next/navigation'
 interface ChatInputProps {
     onSendMessage: (message: string) => void;
 }
 
 const ChatInput: React.FC<ChatInputProps> = ({ onSendMessage }) => {
-    const [message, setMessage] = useState<string>('');
-    const [showEmojiPicker, setShowEmojiPicker] = useState<boolean>(false);
+    const [message, setMessage] = useState('');
+    const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+    const [showScheduleModal, setShowScheduleModal] = useState(false);
+    const router = useRouter()
 
-    // 메시지 전송 함수(handleSubmit)
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         if (message.trim() !== '') {
@@ -25,12 +26,28 @@ const ChatInput: React.FC<ChatInputProps> = ({ onSendMessage }) => {
         setShowEmojiPicker(false);
     };
 
+    const handleScheduleSave = (date: string, time: string, title: string) => {
+        const calendarIcon = "📅";
+        const formattedMessage = `일정이 공유되었어요.\n----------\n${calendarIcon} ${date} ${time}\n제목: ${title}\n----------`;
+        onSendMessage(formattedMessage);
+        setShowScheduleModal(false);
+    };
+
+    // 채팅방 나가기
+    const handleExit = () => {
+        router.push('/wait');
+    };
+
+
     return (
         <div className="relative">
             {showEmojiPicker && (
                 <div className="absolute bottom-16 left-0">
                     <EmojiPicker onSelectEmoji={handleSelectEmoji} />
                 </div>
+            )}
+            {showScheduleModal && (
+                <ScheduleModal onClose={() => setShowScheduleModal(false)} onSave={handleScheduleSave} />
             )}
             <form onSubmit={handleSubmit} className="flex p-2 border-t border-gray-300">
                 <button
@@ -39,6 +56,20 @@ const ChatInput: React.FC<ChatInputProps> = ({ onSendMessage }) => {
                     className="mr-2 text-2xl"
                 >
                     😀
+                </button>
+                <button
+                    type="button"
+                    onClick={() => setShowScheduleModal(true)}
+                    className="mr-2 text-2xl"
+                >
+                    📅
+                </button>
+                <button
+                    type="button"
+                    onClick={handleExit}
+                    className="mr-2 px-2 bg-red-300 text-white rounded-lg"
+                >
+                    나가기
                 </button>
                 <input
                     type="text"

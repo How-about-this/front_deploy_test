@@ -1,10 +1,14 @@
 'use client'
 
 import { combineReducers } from '@reduxjs/toolkit';
-import authenticationCheck from './authenticationCheck';
+import loginCheck from './loginCheck';
+import matchingStatusModal from './matchingStatusModal';
+import modeCheck from './modeCheck';
 
 const rootReducer = combineReducers({
-  authenticationCheck,
+  loginCheck,
+  matchingStatusModal,
+  modeCheck,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

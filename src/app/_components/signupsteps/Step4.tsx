@@ -1,6 +1,4 @@
-"use client";
-
-import { useState, ChangeEvent} from 'react';
+import { useState, useEffect } from 'react';
 import CustomNumberInput from '../../_components/customNum';
 import StepIndicator from '../../_components/stepIndicator';
 import NavigationButtons from './navigationbuttons/NavigationButtons';
@@ -8,24 +6,39 @@ import NavigationButtons from './navigationbuttons/NavigationButtons';
 const mbtiTypes = ['INFJ', 'INFP', 'ENFJ', 'ENFP', 'ISTJ', 'ISFJ', 'ESTJ', 'ESFJ', 'INTJ', 'INTP', 'ENTJ', 'ENTP', 'ISTP', 'ISFP', 'ESTP', 'ESFP'];
 const religionTypes = ['기독교', '불교', '천주교', '이슬람', '기타', '무교'];
 const drinkingTypes = ['알쓰', '평균', '술고래'];
-const smokeTypes = ['흡연', '비흡연']
-import { FormData } from '@/app/(route)/signup/page';
+const smokeOrNot = ['흡연', '비흡연'];
+
+interface FormData {
+    height?: number;
+    weight?: number;
+    mbti?: string;
+    religion?: string;
+    drinkAmount?: string;
+}
 
 interface Step4Props {
     nextStep: () => void;
     prevStep: () => void;
     updateFormData: (data: Partial<FormData>) => void;
-    formData: Partial<FormData>;
+    formData: any;
 }
 
 const Step4: React.FC<Step4Props> = ({ nextStep, prevStep, updateFormData, formData }) => {
-    const [showAllMbti, setShowAllMbti] = useState<boolean>(false);
-    const [selectedMbti, setSelectedMbti] = useState<string | undefined>(undefined);
-    const [selectedReligion, setSelectedReligion] = useState<string | undefined>(undefined);
-    const [selectedDrinking, setSelectedDrinking] = useState<string | undefined>(undefined);
-    const [smoke, setSmoke] = useState<boolean>(false);
-    const [height, setHeight] = useState<number>(170);
-    const [weight, setWeight] = useState<number>(70);
+    const [showAllMbti, setShowAllMbti] = useState(false);
+    const [selectedMbti, setSelectedMbti] = useState<string | undefined>(formData.mbti || undefined);
+    const [selectedReligion, setSelectedReligion] = useState<string | undefined>(formData.religion || undefined);
+    const [selectedDrinking, setSelectedDrinking] = useState<string | undefined>(formData.drinkAmount || undefined);
+    const [height, setHeight] = useState<number>(formData.height || 170);
+    const [weight, setWeight] = useState<number>(formData.weight || 70);
+    const [smoke, setSmoke] = useState<boolean>(formData.smoke || null);
+
+    useEffect(() => {
+        setSelectedMbti(formData.mbti || undefined);
+        setSelectedReligion(formData.religion || undefined);
+        setSelectedDrinking(formData.drinkAmount || undefined);
+        setHeight(formData.height || 170);
+        setWeight(formData.weight || 70);
+    }, [formData]);
 
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
@@ -35,7 +48,6 @@ const Step4: React.FC<Step4Props> = ({ nextStep, prevStep, updateFormData, formD
             mbti: selectedMbti,
             religion: selectedReligion,
             drinkAmount: selectedDrinking,
-            smoke
         };
         updateFormData(data);
         nextStep();
@@ -44,7 +56,7 @@ const Step4: React.FC<Step4Props> = ({ nextStep, prevStep, updateFormData, formD
     return (
         <div className="flex items-center justify-center min-h-screen">
             <div className="w-full max-w-xl p-12 bg-white shadow-md rounded-lg border-4 border-red-300">
-                <StepIndicator currentStep={4} />
+                <StepIndicator currentStep={3} />
                 <form onSubmit={handleSubmit} className="space-y-6">
                     <label htmlFor="additional-info" className="block text-4xl text-center mb-10">추가 정보</label>
                     <div className="text-center">
@@ -57,7 +69,7 @@ const Step4: React.FC<Step4Props> = ({ nextStep, prevStep, updateFormData, formD
                                     initialValue={175}
                                     unit="cm"
                                     value={height}
-                                    onChange={(e: ChangeEvent<HTMLInputElement>) => setHeight(Number(e.target.value))}
+                                    onChange={(e) => setHeight(Number(e.target.value))}
                                 />
                             </div>
                             <div className="flex flex-col items-center">
@@ -67,7 +79,7 @@ const Step4: React.FC<Step4Props> = ({ nextStep, prevStep, updateFormData, formD
                                     initialValue={80}
                                     unit="kg"
                                     value={weight}
-                                    onChange={(e: ChangeEvent<HTMLInputElement>) => setWeight(Number(e.target.value))}
+                                    onChange={(e) => setWeight(Number(e.target.value))}
                                 />
                             </div>
                         </div>
@@ -112,7 +124,7 @@ const Step4: React.FC<Step4Props> = ({ nextStep, prevStep, updateFormData, formD
                         </div>
                     </div>
                     <div className="text-center">
-                        <label htmlFor="drinking-capacity" className="block text-2xl mb-4">주량</label>
+                        <label htmlFor="drinkingAmount" className="block text-2xl mb-4">주량</label>
                         <div className="grid grid-cols-3 gap-2">
                             {drinkingTypes.map((drinking) => (
                                 <button
@@ -127,16 +139,16 @@ const Step4: React.FC<Step4Props> = ({ nextStep, prevStep, updateFormData, formD
                         </div>
                     </div>
                     <div className="text-center">
-                        <label htmlFor="drinking-capacity" className="block text-2xl mb-4">흡연 여부</label>
+                        <label htmlFor="smoke" className="block text-2xl mb-4">흡연</label>
                         <div className="grid grid-cols-2 gap-2">
-                            {smokeTypes.map((smokeOrNot) => (
+                            {smokeOrNot.map((smokeBool) => (
                                 <button
-                                    key={smokeOrNot}
+                                    key={smokeBool}
                                     type="button"
-                                    onClick={() => setSmoke(() => smokeOrNot === "비흡연"? false : true)}
-                                    className={`py-1 px-2 border-2 border-red-300 rounded-2xl text-sm ${(smoke && smokeOrNot === "흡연") || (!smoke && smokeOrNot === "비흡연") ? 'bg-red-300 text-white' : 'bg-white text-black'}`}
+                                    onClick={() => {setSmoke(()=>{return smokeBool === "흡연"? true : false})}}
+                                    className={`py-1 px-2 border-2 border-red-300 rounded-2xl text-sm ${smoke === (smokeBool === "흡연"? true : false) ? 'bg-red-300 text-white' : 'bg-white text-black'}`}
                                 >
-                                    {smokeOrNot}
+                                    {smokeBool}
                                 </button>
                             ))}
                         </div>

@@ -9,7 +9,8 @@ interface CustomNumberInputProps {
     onChange: (event: ChangeEvent<HTMLInputElement>) => void;
 }
 
-const CustomNumberInput: React.FC<CustomNumberInputProps> = ({ id, name, initialValue, unit, value, onChange }) => { const [internalValue, setInternalValue] = useState(initialValue);
+const CustomNumberInput: React.FC<CustomNumberInputProps> = ({ id, name, initialValue, unit, value, onChange }) => {
+    const [internalValue, setInternalValue] = useState(initialValue);
 
     useEffect(() => {
         setInternalValue(value);
@@ -25,10 +26,11 @@ const CustomNumberInput: React.FC<CustomNumberInputProps> = ({ id, name, initial
                 value: newValue.toString(),
             }
         } as ChangeEvent<HTMLInputElement>;
-        onChange(inputEvent);    };
+        onChange(inputEvent);
+    };
 
-        const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-            const newValue = Number(event.target.value);
+    const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+        const newValue = Number(event.target.value);
         setInternalValue(newValue);
         onChange(event);
     };

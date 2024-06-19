@@ -5,13 +5,14 @@ import React from "react";
 import Script from "next/script";
 import './globals.css'
 import ReduxProvider from "@/state/provider";
+import ClientSideLayout from "./ClientSideLayout";
 
 
 export const metadata: Metadata = {
   title: "honjaya",
   description: "honjaya project",
   icons: {
-    icon: "../../public/sleeping.png", // 혼자야 icon으로 나중에 대체하기
+    icon: "../../public/sleeping.png",
   },
 };
 
@@ -26,11 +27,14 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+
   return (
     <html>
       <body>
         <ReduxProvider>
-          {children}
+          <ClientSideLayout>
+            {children}
+          </ClientSideLayout>
         </ReduxProvider>
       </body>
       <Script

@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { purchaseItem } from '@/app/api/api'; // API 파일 경로에 맞게 수정하세요
+import { purchaseItem } from '@/app/api/payment'; 
 
 interface Item {
     name: string;
@@ -43,7 +43,7 @@ const PurchaseModal: React.FC<PurchaseModalProps> = ({ item, onClose, userZem })
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 transition-opacity duration-300">
-            <div className="bg-white w-11/12 max-w-md p-6 mt-10 shadow-lg relative transition-transform duration-300 transform">
+            <div className="bg-white w-11/12 max-w-md p-6 mt-10 shadow-lg relative transition-transform duration-300 transform overflow-hidden">
                 <button
                     onClick={onClose}
                     className="absolute top-2 right-2 text-gray-500 hover:text-gray-800 text-4xl"
@@ -72,7 +72,7 @@ const PurchaseModal: React.FC<PurchaseModalProps> = ({ item, onClose, userZem })
 
             {isZemInsufficient && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 transition-opacity duration-300">
-                    <div className="bg-white w-11/12 max-w-md p-6 mt-10 shadow-lg relative transition-transform duration-300 transform">
+                    <div className="bg-white w-11/12 max-w-md p-6 mt-10 shadow-lg relative transition-transform duration-300 transform overflow-hidden">
                         <button
                             onClick={handleCloseInsufficientModal}
                             className="absolute top-2 right-2 text-gray-500 hover:text-gray-800 text-4xl"

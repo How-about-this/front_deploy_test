@@ -2,17 +2,16 @@
 
 import Image from "next/image";
 import TeamCreateModal from "../wait/TeamCreateModal";
+import TeamJoinModal from "../wait/TeamJoinModal";
 
 type Props = {
     openTeamCreateModal: boolean;
     setOpenTeamCreateModal: () => void;
+    openTeamJoinModal: boolean;
+    setOpenTeamJoinModal: () => void;
 }
 
-const TeamChatButtons = ({ openTeamCreateModal, setOpenTeamCreateModal }: Props) => {
-
-    const matchTeam = () => {
-        matchTeam
-    }
+const TeamChatButtons = ({ openTeamCreateModal, setOpenTeamCreateModal, openTeamJoinModal, setOpenTeamJoinModal, }: Props) => {
 
     return (
         // <div className="w-full h-full flex justify-center items-center">
@@ -33,12 +32,13 @@ const TeamChatButtons = ({ openTeamCreateModal, setOpenTeamCreateModal }: Props)
                 </button>
                 <button
                     className=" w-4/10 h-full font-jua text-2xl text-white shadow-sm bg-gradient-to-r from-main-color to-orange-300 rounded-md hover:ring-4 hover:ring-red-100 active:bg-gradient-to-bl"
-                    onClick={matchTeam}
+                    onClick={setOpenTeamJoinModal}
                 >
                     팀 가입
                 </button>
             </div>
             {openTeamCreateModal && <TeamCreateModal setOpenTeamCreateModal={setOpenTeamCreateModal} />}
+            {openTeamJoinModal && <TeamJoinModal setOpenTeamJoinModal={setOpenTeamJoinModal} />}
         </div>
     )
 }
